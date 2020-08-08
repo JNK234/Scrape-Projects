@@ -25,7 +25,15 @@ file.write('PRN  ,  SRN  ,  Name  ,  Class  ,  Section  ,  Cycle  ,  Department 
 file.write('\n')
 
 for i in range(25,27):
-    SRN = 'PES12018006{}'.format(i)
+    if i<10:
+        SRN = 'PES120180000{}'.format(i)
+    elif i>=10 and i<100:
+        SRN = 'PES12018000{}'.format(i)
+    elif i>=100 and i<1000:
+        SRN = 'PES1201800{}'.format(i)
+    else:
+        SRN = 'PES120180{}'.format(i)
+        
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'knowClsSectionModalLoginId'))).clear()
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'knowClsSectionModalLoginId'))).send_keys(SRN)
     driver.find_element_by_id('knowClsSectionModalSearch').click()
