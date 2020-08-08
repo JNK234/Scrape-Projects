@@ -13,17 +13,34 @@ file = open('List_details.csv','a')
 
 driver.get('https://pesuacademy.com/Academy/')
 driver.find_element_by_id('knowClsSection').click()
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'knowClsSectionModalLoginId'))).send_keys('PES1201800625')
-driver.find_element_by_id('knowClsSectionModalSearch').click()
 
-time.sleep(1)
-page_html = driver.page_source
-page_soup = BeautifulSoup(page_html,'html.parser')
+def cleanData(lsst):
+    for i in lsst:
+        if i == '':
+            lsst.remove(i)
+    strr = '  ,  '.join(lsst)
+    return strr
 
-data = page_soup.findAll("tr")
+file.write('PRN  ,  SRN  ,  Name  ,  Class  ,  Section  ,  Cycle  ,  Department  ,  Branch  ,  Institute Name')
+file.write('\n')
 
-for i in data:
-    print(i.text)
-    break
+for i in range(25,27):
+    SRN = 'PES12018006{}'.format(i)
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'knowClsSectionModalLoginId'))).clear()
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'knowClsSectionModalLoginId'))).send_keys(SRN)
+    driver.find_element_by_id('knowClsSectionModalSearch').click()
+
+    time.sleep(1)
+    page_html = driver.page_source
+    page_soup = BeautifulSoup(page_html,'html.parser')
+
+    data = page_soup.findAll("tr")
+
+    for i in range(1,len(data)):
+        data[i] = data[i].text.split('\n')
+        strr = cleanData(data[i])
+        file.write(strr)
+        file.write('\n')
 
 
+file.close()
