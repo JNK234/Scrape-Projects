@@ -24,7 +24,7 @@ def cleanData(lsst):
 file.write('PRN  ,  SRN  ,  Name  ,  Class  ,  Section  ,  Cycle  ,  Department  ,  Branch  ,  Institute Name')
 file.write('\n')
 
-for i in range(25,27):
+for i in range(2000,2050):
     if i<10:
         SRN = 'PES120180000{}'.format(i)
     elif i>=10 and i<100:
