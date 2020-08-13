@@ -3,20 +3,6 @@ from datetime import datetime
 import time
 import re
 
-file = open('words_list.txt','r')
-words = file.readlines()
-
-# print(words)
-# for i in words:
-#     if '\n' in i:
-#         i = i.replace('\n','')
-#     print(i)
-
-def createFormat():
-    print("...")
-
-
-
 def send_mail(texxt):
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.ehlo()
@@ -34,5 +20,33 @@ def send_mail(texxt):
     )
     print("HEY Narasimha, EMAIL HAS BEEN SENT SUCCESSFULLY.")
     server.quit()
-    exit()
+
+file = open('words_list.txt','r')
+words = file.readlines()
+
+word_list = []
+
+for i in range(0,len(words),10):
+    lsst = []
+    lsst.append(words[i:i+10])
+    word_list.append(lsst)
+    
+def createFormat(word_list):
+    mail_post = """Here is the set of words and meanings....\n\n"""
+
+    word_list = word_list[0]
+    for i in range(len(word_list)):
+        strr = str(i +1) +". "+ word_list[i]
+        mail_post = mail_post + strr
+
+    return mail_post
+
+for i in word_list:
+    mail_post = createFormat(i)
+    send_mail(mail_post)
+    time.sleep(10)
+    
+
+
+
 
