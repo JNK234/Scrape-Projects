@@ -3,6 +3,8 @@ from datetime import datetime
 import time
 import re
 
+timenow = datetime.now().strftime("%H:%M:%S")
+
 def send_mail(texxt):
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.ehlo()
